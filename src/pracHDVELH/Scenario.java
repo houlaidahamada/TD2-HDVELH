@@ -17,6 +17,20 @@ public class Scenario {
 
 	/* TO BE COMPLETED */
 
+	public Scenario(GUIManager gui2, Event startEvent) {
+		this.gui = gui2;
+		this.head = startEvent;
+	}
+	
+	/** Methods **/
+
+	public Event getHead() {
+		return this.head;
+	}
+	public void setHead(Event head) {
+		this.head = head;
+	}
+
 	/* MAIN */
 	public static void main(String[] args) {
 		Scenario scenario;
@@ -76,6 +90,8 @@ public class Scenario {
 
 		System.out.println(scenario.run());
 	}
-}
 
-// eof
+	public void run() {
+		head.run();
+	}
+}
