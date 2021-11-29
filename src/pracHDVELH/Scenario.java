@@ -12,7 +12,7 @@ package pracHDVELH;
 public class Scenario {
 	private static final String MSG_EMPTY_SCENARIO = "Sorry, no scenario was found.";
 	private static final String MSG_FINALE = "That's all folks!";
-	private Event head;
+	private static Event head;
 	private GUIManager gui;
 
 	/* TO BE COMPLETED */
@@ -27,14 +27,18 @@ public class Scenario {
 	public Event getHead() {
 		return this.head;
 	}
+	
 	public void setHead(Event head) {
 		this.head = head;
 	}
+	
+	
 
 	/* MAIN */
 	public static void main(String[] args) {
 		Scenario scenario;
 		GUIManager gui = new GUIManager(System.in, System.out, System.err);
+		
 
 		// S
 		// *1:event1
@@ -87,11 +91,12 @@ public class Scenario {
 		event4.addDaughter(event2);
 		event4.addDaughter(endEvent);
 		event4.addDaughter(event3);
-
-		System.out.println(scenario.run());
+		
+		String data = startEvent.getData();
+		System.out.println(data);
+		
 	}
+	
+	
 
-	public void run() {
-		head.run();
-	}
 }

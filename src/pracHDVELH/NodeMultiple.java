@@ -83,11 +83,17 @@ public class NodeMultiple {
 	 * @param daughter
 	 */
 	public void addDaughter(NodeMultiple daughter) {
-		for(int i = 0; i < NODE_MAX_ARITY; i++) {
-			if(daughters[i] == null) {
-				daughters[i] = daughter;
-			}
+		if(daughter == null) {return;}
+		if(daughters == null) {return;}
+		int i = 0;
+		while(i < NODE_MAX_ARITY && daughters[i] != null) {
+			i++;
 		}
+		if(i >= NODE_MAX_ARITY) {
+			return;
+		}
+		daughters[i] = daughter;
+		
 	}
 
 	/**
@@ -109,10 +115,9 @@ public class NodeMultiple {
 	 *         daughter node.
 	 */
 	public boolean hasDaughters() {
-		for(int i = 0; i < NODE_MAX_ARITY; i++) {
-			if(daughters[i] != null) {
+		int i = 0;
+		while(i < NODE_MAX_ARITY && daughters[i] != null) {
 				return true;
-			}
 		}
 		return false;
 	}
@@ -122,7 +127,9 @@ public class NodeMultiple {
 	 * Default constructor.
 	 */
 	public NodeMultiple() {
-		
+		super();
+		this.data = new Object();
+		this.daughters = new NodeMultiple[NODE_MAX_ARITY] ;
 	}
 
 	/**
@@ -132,9 +139,8 @@ public class NodeMultiple {
 	 * @param data
 	 */
 	public NodeMultiple(Object data) {
+		this();
 		this.data = data;
-		this.daughters = new NodeMultiple[NODE_MAX_ARITY] ;
 	}
 }
-
-// eof
+	

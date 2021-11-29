@@ -18,23 +18,25 @@ public class Event extends NodeMultiple {
 	public static final String PROMPT_ANSWER = "Answer: ";
 	public static final String WARNING_MSG_INTEGER_EXPECTED = "Please input a integer within range!";
 	
+	private static int lastID = 0;
 	private GUIManager gui;
-	private String eventText;
+	private static String data;
 	private String playerAnswer;
 	private Scanner inputReader;
 	private int chosenPath;
 	private int id;
 	private Event[] daughters;
 	
+	public Event(GUIManager gui, String string) {
+		super(data);
+		this.gui = gui;
+		data = string;
+		this.inputReader = gui.getInputReader();
+		id = ++lastID;
+	}
 	
 	public Event() {
-		
-	}
-
-
-	public Event(GUIManager gui, String string) {
-		this.gui = gui;
-		eventText = string;
+		this(new GUIManager(), null);
 	}
 
 	/**
@@ -84,7 +86,7 @@ public class Event extends NodeMultiple {
 	 * @see pracHDVELH.NodeMultiple#getData()
 	 */
 	public String getData() {
-		return super.getData().toString();
+		return data;
 	}
 
 	/**
@@ -92,7 +94,12 @@ public class Event extends NodeMultiple {
 	 * @param data
 	 */
 	public void setData(String data) {
-		super.setData(data);
+		this.data = data;
+	}
+	
+	public int interpretAnswer() {
+		chosenPath = Integer.parseInt(playerAnswer) - 1;
+		return chosenPath;
 	}
 
 	/**
@@ -109,7 +116,11 @@ public class Event extends NodeMultiple {
 	 * @param i
 	 */
 	public void setDaughter(Event daughter, int i) {
-		daughters[i] = daughter;
+		if(daughters == null) {return;}
+		if(daughter == null) {return;}
+		if(i < daughters.length) {
+			daughters[i] = daughter;
+		}
 	}
 
 	/**
@@ -126,14 +137,18 @@ public class Event extends NodeMultiple {
 		this.gui = gui;
 	}
 
-	/**
+	/** 
 	 * @return the id
 	 */
 	public int getId() {
 		return id;
 	}
 	
-	public void run() {
+	public Event run() {
+		gui.outputln(this.getData());
+		gui.outputln(PROMPT_ANSWER);
+		playerAnswer = inputReader.next();
+		return daughters[chosenPath];	
 	}
 	
 	
