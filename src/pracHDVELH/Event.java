@@ -20,17 +20,16 @@ public class Event extends NodeMultiple {
 	
 	private static int lastID = 0;
 	private GUIManager gui;
-	private static String data;
+	private String data;
 	private String playerAnswer;
 	private Scanner inputReader;
 	private int chosenPath;
 	private int id;
-	private Event[] daughters;
 	
 	public Event(GUIManager gui, String string) {
-		super(data);
+		super(string);
 		this.gui = gui;
-		data = string;
+		this.data = string;
 		this.inputReader = gui.getInputReader();
 		id = ++lastID;
 	}
@@ -86,7 +85,7 @@ public class Event extends NodeMultiple {
 	 * @see pracHDVELH.NodeMultiple#getData()
 	 */
 	public String getData() {
-		return data;
+		return this.data;
 	}
 
 	/**
@@ -107,7 +106,7 @@ public class Event extends NodeMultiple {
 	 */
 	@Override
 	public Event getDaughter(int i) {
-		return daughters[i];
+		return (Event)getDaughters()[i];
 	}
 
 	/**
@@ -116,11 +115,13 @@ public class Event extends NodeMultiple {
 	 * @param i
 	 */
 	public void setDaughter(Event daughter, int i) {
+		NodeMultiple[] daughters = getDaughters();
 		if(daughters == null) {return;}
 		if(daughter == null) {return;}
 		if(i < daughters.length) {
 			daughters[i] = daughter;
 		}
+		setDaughters(daughters);
 	}
 
 	/**
@@ -148,7 +149,8 @@ public class Event extends NodeMultiple {
 		gui.outputln(this.getData());
 		gui.outputln(PROMPT_ANSWER);
 		playerAnswer = inputReader.next();
-		return daughters[chosenPath];	
+		chosenPath = interpretAnswer();
+		return getDaughter(chosenPath);
 	}
 	
 	

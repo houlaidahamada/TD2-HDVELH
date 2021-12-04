@@ -1,15 +1,25 @@
 package pracHDVELH;
 
+import java.util.Scanner;
+
 public class EventExactSolution extends Event {
 	
 	private GUIManager guigui;
-	private String string;
-	private String string2;
+	private String reponse;
 
-	public EventExactSolution(GUIManager guigui, String string1, String string2) {
+
+	public EventExactSolution(GUIManager guigui, String data, String reponse) {
+		super(guigui,data);
 		this.guigui = guigui;
-		this.string = string1;
-		this.string2 = string2;
+		this.reponse = reponse;
 	}
+	
+	
+	public Event run() {
+		guigui.outputln(getData() + " " + reponse + "\n");
+		return getDaughter(0);
+	}
+	
+	
 
 }

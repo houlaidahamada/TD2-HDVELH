@@ -1,19 +1,28 @@
 package pracHDVELH;
 
+import java.util.Random;
+
 public class EventRandomSolution extends Event {
 	
 	private GUIManager gui;
-	private String string;
 	private int[] mask;
-	private String string2;
-	private String string3;
+	private String diceRoll;
+	private String answer;
 
-	public EventRandomSolution(GUIManager gui, String string, int[] mask, String string2, String string3) {
+	public EventRandomSolution(GUIManager gui, String data, int[] mask, String diceRoll, String answer) {
+		super(gui,data);
 		this.gui = gui;
-		this.string = string;
 		this.mask = mask;
-		this.string2 = string2;
-		this.string3 = string3;
+		this.diceRoll = diceRoll;
+		this.answer = answer;
+	}
+	
+	public Event run() {
+		gui.outputln(getData() + " " + diceRoll);
+		Random rand = new Random();
+		int chosenPath = rand.nextInt(mask.length);
+		gui.outputln(answer + mask[chosenPath] + "\n"); 
+		return getDaughter(chosenPath);
 	}
 
 }
